@@ -12,42 +12,21 @@
     
     <style>
         :root { 
-            --bg-color: #e5e7eb; 
-            --card-bg: #ffffff; 
-            --text-main: #1f2937; 
-            --text-muted: #6b7280; 
-            --input-bg: #f9fafb; 
-            --border-color: #e5e7eb; 
-            
-            --primary-color: #2563eb; 
-            --primary-hover: #1d4ed8;
-            --primary-light: rgba(37, 99, 235, 0.1);
-            
-            --success-color: #10b981;
-            --danger-color: #ef4444;
+            --bg-color: #e5e7eb; --card-bg: #ffffff; --text-main: #1f2937; --text-muted: #6b7280; 
+            --input-bg: #f9fafb; --border-color: #e5e7eb; --primary-color: #2563eb; --primary-hover: #1d4ed8;
+            --primary-light: rgba(37, 99, 235, 0.1); --success-color: #10b981; --danger-color: #ef4444;
             --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
         
-        body.dark-mode { 
-            --bg-color: #111827; --card-bg: #1f2937; --text-main: #f9fafb; 
-            --text-muted: #9ca3af; --input-bg: #374151; --border-color: #4b5563; 
-        }
-
+        body.dark-mode { --bg-color: #111827; --card-bg: #1f2937; --text-main: #f9fafb; --text-muted: #9ca3af; --input-bg: #374151; --border-color: #4b5563; }
         body.theme-red { --primary-color: #dc2626; --primary-hover: #b91c1c; --primary-light: rgba(220, 38, 38, 0.1); }
         body.theme-pink { --primary-color: #db2777; --primary-hover: #be185d; --primary-light: rgba(219, 39, 119, 0.1); }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Prompt', sans-serif; }
         body { background: var(--bg-color); color: var(--text-main); display: flex; justify-content: center; padding: 20px 10px; min-height: 100vh; transition: background 0.3s; }
         
-        .card-wrapper {
-            position: relative; max-width: 1200px; width: 100%; border-radius: 22px; padding: 4px;
-            overflow: hidden; background: var(--card-bg); box-shadow: var(--shadow); margin: auto; align-self: flex-start;
-        }
-        .card-wrapper::before {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: conic-gradient(transparent, transparent, transparent, var(--primary-color));
-            animation: rotateLightning 3s linear infinite;
-        }
+        .card-wrapper { position: relative; max-width: 1200px; width: 100%; border-radius: 22px; padding: 4px; overflow: hidden; background: var(--card-bg); box-shadow: var(--shadow); margin: auto; align-self: flex-start; }
+        .card-wrapper::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: conic-gradient(transparent, transparent, transparent, var(--primary-color)); animation: rotateLightning 3s linear infinite; }
         @keyframes rotateLightning { 100% { transform: rotate(360deg); } }
 
         .app-container { position: relative; z-index: 1; background: var(--card-bg); width: 100%; border-radius: 18px; padding: 24px; min-height: 80vh; }
@@ -179,12 +158,12 @@
                 <div class="hero-box">
                     <h3>ระบบรับ-ส่งเอกสารส่วนกลาง</h3>
                     <p><b>ตารางรอบการจัดส่งเอกสาร:</b><br>
-                       🌅 <b>รอบเช้า:</b> ปิดรับงานและเริ่มนำส่งเวลา <b>09:30 น.</b><br>
-                       🌇 <b>รอบบ่าย:</b> ปิดรับงานและเริ่มนำส่งเวลา <b>13:30 น.</b>
+                        🌅 <b>รอบเช้า:</b> ปิดรับงานและเริ่มนำส่งเวลา <b>09:30 น.</b><br>
+                        🌇 <b>รอบบ่าย:</b> ปิดรับงานและเริ่มนำส่งเวลา <b>13:30 น.</b>
                     </p>
                     <hr style="border:0; border-top:1px dashed var(--border-color); margin:15px 0;">
                     <p style="color:var(--text-main); font-weight:500;">
-                       📞 <b>ติดต่อส่วนกลาง:</b> BSCS_GNR1_Tel 02-792-1888 #3282, 3283, 3286
+                        📞 <b>ติดต่อส่วนกลาง:</b> BSCS_GNR1_Tel 02-792-1888 #3282, 3283, 3286
                     </p>
                 </div>
                 <button class="btn-primary" onclick="switchView('tabReq')">สร้างงานแจ้งส่งเอกสารใหม่</button>
@@ -193,28 +172,52 @@
             <form id="tabReq" class="view-section">
                 <h3 style="margin-bottom:15px; color:var(--primary-color);">ข้อมูลผู้ส่ง</h3>
                 <div class="form-row">
-                    <div class="form-group"><label>ฝ่ายผู้ส่ง</label><input type="text" id="senderDept" class="form-control" placeholder="เช่น ฝ่ายบัญชี, HR" required></div>
+                    <div class="form-group">
+                        <label>ฝ่ายผู้ส่ง</label>
+                        <select id="senderDept" class="form-control" onchange="toggleDeptOther('senderDept', 'senderDeptOther')" required>
+                            <option value="" disabled selected>กำลังโหลดรายชื่อฝ่าย...</option>
+                        </select>
+                        <input type="text" id="senderDeptOther" class="form-control" placeholder="โปรดระบุชื่อฝ่ายของคุณ" style="display:none; margin-top:8px;">
+                    </div>
                     <div class="form-group"><label>ชื่อผู้ส่ง</label><input type="text" id="senderName" class="form-control" placeholder="ชื่อ-นามสกุล" required></div>
-                    <div class="form-group"><label>เบอร์ติดต่อ</label><input type="text" id="senderPhone" class="form-control" placeholder="08X-XXX-XXXX" required></div>
+                    <div class="form-group"><label>เบอร์ติดต่อผู้ส่ง</label><input type="text" id="senderPhone" class="form-control" placeholder="08X-XXX-XXXX" required></div>
                 </div>
                 
                 <h3 style="margin-bottom:15px; color:var(--primary-color); margin-top:10px;">ข้อมูลปลายทาง</h3>
                 <div class="form-row">
                     <div class="form-group"><label>สถานที่ปลายทาง / บริษัท</label><input type="text" id="destName" class="form-control" placeholder="ชื่ออาคาร หรือ บริษัทปลายทาง" required></div>
-                    <div class="form-group"><label>ฝ่ายผู้รับ / บุคคลที่ติดต่อ</label><input type="text" id="destDept" class="form-control" placeholder="ระบุฝ่าย หรือ ชื่อผู้รับ" required></div>
+                    <div class="form-group">
+                        <label>ฝ่ายผู้รับ</label>
+                        <select id="destDept" class="form-control" onchange="toggleDeptOther('destDept', 'destDeptOther')" required>
+                            <option value="" disabled selected>กำลังโหลดรายชื่อฝ่าย...</option>
+                        </select>
+                        <input type="text" id="destDeptOther" class="form-control" placeholder="โปรดระบุชื่อฝ่ายหรือผู้รับ" style="display:none; margin-top:8px;">
+                    </div>
+                    <div class="form-group"><label>เบอร์ติดต่อผู้รับ</label><input type="text" id="destPhone" class="form-control" placeholder="08X-XXX-XXXX (ถ้ามี)"></div>
                 </div>
 
-                <div class="form-group">
-                    <label>รอบจัดส่ง</label>
-                    <select id="timeSlot" class="form-control">
-                        <option value="รอบเช้า 09:30">รอบเช้า 09:30 น.</option>
-                        <option value="รอบบ่าย 13:30">รอบบ่าย 13:30 น.</option>
-                    </select>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>รอบจัดส่ง</label>
+                        <select id="timeSlot" class="form-control">
+                            <option value="รอบเช้า 09:30">รอบเช้า 09:30 น.</option>
+                            <option value="รอบบ่าย 13:30">รอบบ่าย 13:30 น.</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>รายละเอียดเพิ่มเติม</label>
+                        <input type="text" id="details" class="form-control" placeholder="เช่น วางบิล 2 ซอง, รับเช็ค">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>รายละเอียดเพิ่มเติม</label>
-                    <input type="text" id="details" class="form-control" placeholder="เช่น วางบิล 2 ซอง, รับเช็ค">
+
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label>แนบรูปเอกสาร/พัสดุ (เพื่อใช้อ้างอิง)</label>
+                    <div style="position: relative; overflow: hidden; width: 100%;">
+                        <button type="button" class="form-control" style="font-weight: 500; text-align:left; background:var(--card-bg);">📸 ถ่ายรูปหน้าซอง / เลือกรูปภาพ <span id="reqFileNameDisplay" style="color: var(--success-color); float:right;"></span></button>
+                        <input type="file" id="reqPhoto" accept="image/*" capture="environment" style="position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; height: 100%; width: 100%;">
+                    </div>
                 </div>
+
                 <button type="submit" class="btn-primary">ยืนยันแจ้งงานส่งเอกสาร</button>
             </form>
 
@@ -250,12 +253,12 @@
                 <div class="form-group">
                     <label>แนบรูปหลักฐานการส่ง</label>
                     <div style="position: relative; overflow: hidden; width: 100%;">
-                        <button type="button" class="form-control" style="font-weight: 500; text-align:left;">📸 ถ่ายรูป / เลือกรูปภาพ <span id="fileNameDisplay" style="color: var(--success-color); float:right;"></span></button>
+                        <button type="button" class="form-control" style="font-weight: 500; text-align:left; background:var(--card-bg);">📸 ถ่ายรูป / เลือกรูปภาพ <span id="fileNameDisplay" style="color: var(--success-color); float:right;"></span></button>
                         <input type="file" id="podPhoto" accept="image/*" capture="environment" style="position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; height: 100%; width: 100%;">
                     </div>
                 </div>
                 <input type="hidden" id="messengerName" class="form-control">
-                <button type="submit" class="btn-primary" style="background: var(--success-color);">ยืนยันการส่งงาน (ต้องใส่รหัสผ่าน)</button>
+                <button type="submit" class="btn-primary" style="background: var(--success-color);">✔️ ยืนยันการปิดงานส่งเอกสาร (ต้องใส่รหัสผ่าน)</button>
             </form>
 
             <div id="tabMng" class="view-section">
@@ -323,7 +326,6 @@
         const Toast = Swal.mixin({ allowOutsideClick: false, allowEscapeKey: false });
         let cacheTasks = {}; 
 
-        // Set Month Picker Default to Current Month
         const now = new Date();
         document.getElementById('deptMonthPicker').value = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
 
@@ -340,13 +342,41 @@
             .catch(err => { if (failureCallback) failureCallback(err); });
         }
 
+        // 🟢 โหลด Dropdown ฝ่ายทั้งต้นทางและปลายทาง
+        function loadDepartments() {
+            callBackend('getDepartments', {}, list => {
+                let selSender = document.getElementById('senderDept');
+                let selDest = document.getElementById('destDept');
+                let baseHTML = '<option value="" disabled selected>-- โปรดเลือกฝ่าย --</option>';
+                if(list && list.length > 0) { list.forEach(dept => baseHTML += `<option value="${dept}">${dept}</option>`); }
+                baseHTML += `<option value="other">อื่นๆ (โปรดระบุ)</option>`;
+                selSender.innerHTML = baseHTML;
+                selDest.innerHTML = baseHTML;
+            });
+        }
+        
+        function toggleDeptOther(selectId, otherId) {
+            const select = document.getElementById(selectId);
+            const otherInput = document.getElementById(otherId);
+            if (select.value === 'other') {
+                otherInput.style.display = 'block';
+                otherInput.required = true;
+            } else {
+                otherInput.style.display = 'none';
+                otherInput.required = false;
+                otherInput.value = '';
+            }
+        }
+
         function checkOnlineStatus() {
             const dot = document.getElementById('statusDot'), text = document.getElementById('statusText');
             callBackend('ping', {}, res => {
                 if (res && res.status === 'online') { dot.className = 'status-dot online'; text.innerText = 'ระบบเชื่อมต่อสมบูรณ์'; text.style.color = 'var(--success-color)'; }
             }, err => { dot.className = 'status-dot offline'; text.innerText = 'ขาดการเชื่อมต่อ'; text.style.color = 'var(--danger-color)'; });
         }
-        setTimeout(checkOnlineStatus, 500); setInterval(checkOnlineStatus, 25000); 
+        
+        setTimeout(() => { checkOnlineStatus(); loadDepartments(); }, 500); 
+        setInterval(checkOnlineStatus, 25000); 
 
         function switchView(viewId) {
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
@@ -362,7 +392,6 @@
             if(viewId === 'tabMsgCheck') loadMessengerList();
         }
 
-        // Popup ข้อมูลแบบมืออาชีพ (Professional Details Layout)
         function showTaskDetails(id) {
             const t = cacheTasks[id];
             if(!t) return;
@@ -370,38 +399,16 @@
                 title: `📦 ข้อมูลรหัส: ${t.id}`,
                 html: `
                     <div class="detail-box">
-                        <div class="detail-card">
-                            <span class="detail-label">📅 วันที่และเวลา</span>
-                            <span class="detail-val">${t.date}</span>
-                        </div>
-                        <div class="detail-card">
-                            <span class="detail-label">📤 ข้อมูลผู้จัดส่ง (ต้นทาง)</span>
-                            <span class="detail-val">${t.senderDept} - ${t.senderName}</span><br>
-                            <span class="detail-val">📞 ${t.senderPhone}</span>
-                        </div>
-                        <div class="detail-card">
-                            <span class="detail-label">📥 ข้อมูลผู้รับ (ปลายทาง)</span>
-                            <span class="detail-val">🏢 ${t.destName}</span><br>
-                            <span class="detail-val">👤 ${t.destDept}</span>
-                        </div>
+                        <div class="detail-card"><span class="detail-label">📅 วันที่และเวลา</span><span class="detail-val">${t.date}</span></div>
+                        <div class="detail-card"><span class="detail-label">📤 ข้อมูลผู้จัดส่ง (ต้นทาง)</span><span class="detail-val">${t.senderDept} - ${t.senderName}</span><br><span class="detail-val">📞 ${t.senderPhone}</span></div>
+                        <div class="detail-card"><span class="detail-label">📥 ข้อมูลผู้รับ (ปลายทาง)</span><span class="detail-val">🏢 ${t.destName}</span><br><span class="detail-val">👤 ${t.destDept}</span><br><span class="detail-val">📞 ${t.destPhone || '-'}</span></div>
                         <div class="detail-card" style="display:flex; justify-content:space-between;">
-                            <div>
-                                <span class="detail-label">⏰ รอบส่ง</span>
-                                <span class="detail-val" style="color:var(--primary-color);">${t.timeSlot}</span>
-                            </div>
-                            <div>
-                                <span class="detail-label">📌 สถานะ</span>
-                                <span class="detail-val">${t.status}</span>
-                            </div>
+                            <div><span class="detail-label">⏰ รอบส่ง</span><span class="detail-val" style="color:var(--primary-color);">${t.timeSlot}</span></div>
+                            <div><span class="detail-label">📌 สถานะ</span><span class="detail-val">${t.status}</span></div>
                         </div>
-                        <div class="detail-card">
-                            <span class="detail-label">📝 รายละเอียดเพิ่มเติม</span>
-                            <span class="detail-val">${t.details}</span>
-                        </div>
-                        <div class="detail-card" style="border-left: 4px solid var(--success-color);">
-                            <span class="detail-label">🛵 ผู้รับผิดชอบ (Messenger)</span>
-                            <span class="detail-val">${t.messenger}</span>
-                        </div>
+                        <div class="detail-card"><span class="detail-label">📝 รายละเอียดเพิ่มเติม</span><span class="detail-val">${t.details}</span></div>
+                        ${t.reqPhoto && t.reqPhoto.includes('http') ? `<div class="detail-card"><a href="${t.reqPhoto}" target="_blank" style="color:var(--primary-color); font-weight:bold; text-decoration:none;">🖼️ ดูรูปซองเอกสารอ้างอิง</a></div>` : ''}
+                        <div class="detail-card" style="border-left: 4px solid var(--success-color);"><span class="detail-label">🛵 ผู้รับผิดชอบ (Messenger)</span><span class="detail-val">${t.messenger || '-'}</span></div>
                     </div>
                 `,
                 showCloseButton: true, showConfirmButton: false, allowOutsideClick: false, width: '500px'
@@ -453,20 +460,56 @@
             switchView('tabHome');
         }
 
+        document.getElementById('reqPhoto').addEventListener('change', e => { 
+            if(e.target.files.length > 0) document.getElementById('reqFileNameDisplay').innerText = "✅ แนบรูปแล้ว"; 
+        });
+
         document.getElementById('tabReq').addEventListener('submit', function(e) {
             e.preventDefault();
-            Toast.fire({ title: 'กำลังบันทึกข้อมูล...', didOpen: () => Swal.showLoading() });
+            Toast.fire({ title: 'กำลังบันทึกและอัปโหลดรูป...', didOpen: () => Swal.showLoading() });
+            
+            const fileInput = document.getElementById('reqPhoto');
+            if (fileInput.files.length > 0) {
+                const reader = new FileReader(); reader.onload = ev => submitNewTask(ev.target.result); reader.readAsDataURL(fileInput.files[0]);
+            } else { submitNewTask(null); }
+        });
+
+        function submitNewTask(fileBase64) {
+            // ดึงค่า Dept ฝั่งส่ง
+            let finalSenderDept = document.getElementById('senderDept').value;
+            if (finalSenderDept === 'other') finalSenderDept = document.getElementById('senderDeptOther').value;
+            
+            // ดึงค่า Dept ฝั่งรับ
+            let finalDestDept = document.getElementById('destDept').value;
+            if (finalDestDept === 'other') finalDestDept = document.getElementById('destDeptOther').value;
+
             const data = {
-                senderDept: document.getElementById('senderDept').value, senderName: document.getElementById('senderName').value, senderPhone: document.getElementById('senderPhone').value,
-                destName: document.getElementById('destName').value, destDept: document.getElementById('destDept').value, timeSlot: document.getElementById('timeSlot').value, details: document.getElementById('details').value
+                senderDept: finalSenderDept, 
+                senderName: document.getElementById('senderName').value, 
+                senderPhone: document.getElementById('senderPhone').value,
+                destName: document.getElementById('destName').value, 
+                destDept: finalDestDept, 
+                destPhone: document.getElementById('destPhone').value, // เพิ่มเบอร์รับ
+                timeSlot: document.getElementById('timeSlot').value, 
+                details: document.getElementById('details').value, 
+                fileBase64: fileBase64
             };
+
             callBackend('saveNewTask', data, res => {
                 if(res && res.success) {
-                    Toast.fire({ icon: 'success', title: 'บันทึกสำเร็จ!', text: `รหัสงาน: ${res.ticketId}\n(แจ้งเข้าไลน์กลุ่มแล้ว)`, confirmButtonColor: 'var(--primary-color)' });
-                    document.getElementById('tabReq').reset();
+                    Swal.fire({
+                        icon: 'success', title: `🎫 รหัสงาน: ${res.ticketId}`,
+                        html: `<div style="text-align: left; margin-top: 10px; background: var(--input-bg); padding: 15px; border-radius: 8px; border: 1px solid var(--border-color);">
+                                <span style="color: var(--primary-color); font-weight: bold;">📢 ข้อมูลรอบจัดส่ง:</span><br><span style="font-size: 0.95rem; color: var(--text-main);">${res.alertMessage}</span></div>`,
+                        confirmButtonColor: 'var(--success-color)'
+                    });
+                    document.getElementById('tabReq').reset(); 
+                    document.getElementById('reqFileNameDisplay').innerText = '';
+                    toggleDeptOther('senderDept', 'senderDeptOther'); 
+                    toggleDeptOther('destDept', 'destDeptOther');
                 } else { Toast.fire({ icon: 'error', title: 'ผิดพลาด', text: res ? res.message : 'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์' }); }
             });
-        });
+        }
 
         function loadTracking() {
             document.getElementById('trackTableBody').innerHTML = '<tr><td colspan="6" style="text-align:center;">กำลังโหลด...</td></tr>';
@@ -489,8 +532,7 @@
                 availableTasks = tasks;
                 let m = 0, a = 0, html = '';
                 if(!tasks || tasks.length === 0) { 
-                    document.getElementById('boardSummary').innerText = "🎉 ไม่มีงานค้างในระบบเลยครับ เยี่ยมมาก!"; 
-                    document.getElementById('availableTasksList').innerHTML = ''; return; 
+                    document.getElementById('boardSummary').innerText = "🎉 ไม่มีงานค้างในระบบเลยครับ เยี่ยมมาก!"; document.getElementById('availableTasksList').innerHTML = ''; return; 
                 }
                 tasks.forEach(t => {
                     cacheTasks[t.id] = t;
@@ -513,7 +555,7 @@
                 if (res.isConfirmed) {
                     Toast.fire({ title: 'กำลังรับงาน...', didOpen: () => Swal.showLoading() });
                     let mName = document.getElementById('messengerName').value;
-                    callBackend('acceptTasks', { ticketIds: idsToAccept, messengerName: mName, round: roundKeyword }, r => {
+                    callBackend('acceptTasks', { ticketIds: idsToAccept, messengerName: mName }, r => {
                         if(r.success) { Swal.fire({title:'รับงานสำเร็จ', text:`เข้าสู่โหมดพร้อมส่ง ${r.count} งาน`, icon:'success', timer:2000, showConfirmButton:false}); switchView('tabUpd'); } 
                         else { Toast.fire('ผิดพลาด', r.message, 'error'); }
                     });
@@ -540,24 +582,24 @@
             if(!tid) return;
 
             Toast.fire({
-                title: 'ยืนยันรหัสผ่านอีกครั้ง', text: `ยืนยันการส่งงาน ${tid}`, input: 'password', inputPlaceholder: 'กรอกรหัสผ่านของคุณ',
-                showCancelButton: true, confirmButtonText: 'อัปเดตส่งงาน', confirmButtonColor: 'var(--success-color)',
+                title: 'ยืนยันรหัสผ่านอีกครั้ง', text: `ยืนยันการปิดงาน ${tid}`, input: 'password', inputPlaceholder: 'กรอกรหัสผ่านของคุณ',
+                showCancelButton: true, confirmButtonText: 'ปิดงาน', confirmButtonColor: 'var(--success-color)',
                 preConfirm: (pass) => { if(!pass) Swal.showValidationMessage('กรุณากรอกรหัสผ่าน'); return pass; }
             }).then((res) => {
                 if(res.isConfirmed) {
                     Toast.fire({ title: 'กำลังอัปโหลด...', didOpen: () => Swal.showLoading() });
                     const fileInput = document.getElementById('podPhoto');
                     if (fileInput.files.length > 0) {
-                        const reader = new FileReader(); reader.onload = ev => submitUpdate(ev.target.result, res.value); reader.readAsDataURL(fileInput.files[0]);
-                    } else { submitUpdate(null, res.value); }
+                        const reader = new FileReader(); reader.onload = ev => submitUpdateMsg(ev.target.result, res.value); reader.readAsDataURL(fileInput.files[0]);
+                    } else { submitUpdateMsg(null, res.value); }
                 }
             });
         });
         
-        function submitUpdate(file, pass) {
+        function submitUpdateMsg(file, pass) {
             const data = { ticketId: document.getElementById('myTaskDropdown').value, messengerName: document.getElementById('messengerName').value, password: pass, fileBase64: file };
             callBackend('completeTask', data, res => {
-                if(res.success) { Swal.fire({ icon: 'success', title: 'ส่งงานสำเร็จ!', timer: 2000, showConfirmButton: false }); document.getElementById('tabUpd').reset(); loadMyTasks(); } 
+                if(res.success) { Swal.fire({ icon: 'success', title: 'ส่งงานสำเร็จ!', timer: 2000, showConfirmButton: false }); document.getElementById('tabUpd').reset(); document.getElementById('fileNameDisplay').innerText=''; loadMyTasks(); } 
                 else { Toast.fire({ icon: 'error', title: 'ผิดพลาด', text: res.message }); }
             });
         }
@@ -572,7 +614,7 @@
                     let b = t.status === 'สำเร็จ' ? 'สำเร็จ' : (t.status === 'กำลังดำเนินการ' ? 'กำลังดำเนินการ' : (t.status === 'ยกเลิก' ? 'ยกเลิก' : 'รอรับงาน'));
                     html += `<tr onclick="showTaskDetails('${t.id}')"><td><b>${t.id}</b></td><td>${t.destName}</td><td><span class="badge ${b}">${t.status}</span></td><td>${t.messenger}</td><td>
                         ${t.status === 'รอรับงาน' ? `<button onclick="changeStatus('${t.id}', 'ยกเลิก', event)" style="background:var(--danger-color); color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;">ยกเลิก</button>` : ''}
-                        ${t.photo && t.photo.includes('http') ? `<a href="${t.photo}" target="_blank" onclick="event.stopPropagation()" style="background:var(--primary-color); color:white; padding:4px 8px; border-radius:4px; text-decoration:none;">ดูรูป</a>` : ''}
+                        ${t.photo && t.photo.includes('http') ? `<a href="${t.photo}" target="_blank" onclick="event.stopPropagation()" style="background:var(--success-color); color:white; padding:4px 8px; border-radius:4px; text-decoration:none;">รูปผู้รับ</a>` : ''}
                     </td></tr>`;
                 });
                 document.getElementById('adminTableBody').innerHTML = html;
@@ -586,7 +628,7 @@
 
         function changeStatus(id, stat, event) {
             if(event) event.stopPropagation();
-            Toast.fire({ title: 'ยกเลิกงาน?', text: `ยกเลิกงาน ${id}`, icon: 'warning', showCancelButton: true, confirmButtonColor: 'var(--danger-color)', confirmButtonText: 'ยกเลิกเลย' })
+            Swal.fire({ title: 'ยกเลิกงาน?', text: `ยกเลิกงาน ${id}`, icon: 'warning', showCancelButton: true, confirmButtonColor: 'var(--danger-color)', confirmButtonText: 'ยกเลิกเลย' })
             .then((res) => { if (res.isConfirmed) { callBackend('updateTaskStatus', { ticketId: id, newStatus: stat }, r => { if(r.success) loadAdminTable(); }); } });
         }
 
@@ -605,11 +647,9 @@
 
         let deptChartInst = null;
         function loadDashboard() {
-            // Load Calendar Stats
             callBackend('getDashboardStats', {}, stats => {
                 document.getElementById('statTotal').innerText = stats.total; document.getElementById('statDone').innerText = stats.completed;
-                let calHtml = '';
-                let dates = Object.keys(stats.calendar).reverse().slice(0, 30);
+                let calHtml = ''; let dates = Object.keys(stats.calendar).reverse().slice(0, 30);
                 if(dates.length === 0) { calHtml = '<p style="grid-column:1/-1; text-align:center;">ยังไม่มีข้อมูล</p>'; }
                 else {
                     dates.forEach(d => {
@@ -626,40 +666,21 @@
                 document.getElementById('calendarView').innerHTML = calHtml;
             });
 
-            // Load Department Chart Stats
             const m = document.getElementById('deptMonthPicker').value;
             callBackend('getDepartmentStats', {monthYear: m}, deptStats => {
-                let labels = Object.keys(deptStats);
-                let values = Object.values(deptStats);
+                let labels = Object.keys(deptStats), values = Object.values(deptStats);
                 if(labels.length === 0) { labels = ['ไม่มีข้อมูล']; values = [0]; }
-                
                 if(deptChartInst) deptChartInst.destroy();
                 deptChartInst = new Chart(document.getElementById('deptChart').getContext('2d'), {
-                    type: 'bar',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: 'จำนวนงานจัดส่งเอกสาร',
-                            data: values,
-                            backgroundColor: 'rgba(37, 99, 235, 0.7)',
-                            borderColor: '#2563eb',
-                            borderWidth: 1,
-                            borderRadius: 4
-                        }]
-                    },
-                    options: { 
-                        responsive: true, 
-                        scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } },
-                        plugins: { legend: { display: false } }
-                    }
+                    type: 'bar', data: { labels: labels, datasets: [{ label: 'จำนวนงานจัดส่ง', data: values, backgroundColor: 'rgba(37, 99, 235, 0.7)', borderColor: '#2563eb', borderWidth: 1, borderRadius: 4 }] },
+                    options: { responsive: true, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }, plugins: { legend: { display: false } } }
                 });
             });
         }
 
         function loadMessengerList() {
             callBackend('getMessengerList', {}, list => {
-                let sel = document.getElementById('adminMessengerSelect');
-                sel.innerHTML = '<option value="" disabled selected>-- เลือกรายชื่อ Messenger --</option>';
+                let sel = document.getElementById('adminMessengerSelect'); sel.innerHTML = '<option value="" disabled selected>-- เลือกรายชื่อ Messenger --</option>';
                 list.forEach(m => sel.innerHTML += `<option value="${m}">${m}</option>`);
             });
         }
@@ -669,56 +690,22 @@
             if(!mName) return;
             document.getElementById('msgJobsTableBody').innerHTML = '<tr><td colspan="4" style="text-align:center;">กำลังโหลด...</td></tr>';
             callBackend('getMessengerMonthlyJobs', {messengerName: mName}, tasks => {
-                document.getElementById('msgStatsContainer').style.display = 'flex';
-                document.getElementById('msgMonthTotal').innerText = tasks.length;
+                document.getElementById('msgStatsContainer').style.display = 'flex'; document.getElementById('msgMonthTotal').innerText = tasks.length;
                 let html = '';
-                if(tasks.length === 0) { html = '<tr><td colspan="4" style="text-align:center; color:var(--text-muted);">เดือนนี้ยังไม่มีประวัติการวิ่งงาน</td></tr>'; } 
-                else {
-                    tasks.forEach(t => {
-                        cacheTasks[t.id] = t;
-                        let b = t.status === 'สำเร็จ' ? 'สำเร็จ' : 'กำลังดำเนินการ';
-                        html += `<tr onclick="showTaskDetails('${t.id}')">
-                            <td><b>${t.id}</b></td><td><small>${t.date}</small></td><td>${t.destName}</td><td><span class="badge ${b}">${t.status}</span></td>
-                        </tr>`;
-                    });
-                }
+                if(tasks.length === 0) { html = '<tr><td colspan="4" style="text-align:center; color:var(--text-muted);">เดือนนี้ยังไม่มีประวัติ</td></tr>'; } 
+                else { tasks.forEach(t => { html += `<tr onclick="showTaskDetails('${t.id}')"><td><b>${t.id}</b></td><td><small>${t.date}</small></td><td>${t.destName}</td><td><span class="badge ${t.status === 'สำเร็จ' ? 'สำเร็จ' : 'กำลังดำเนินการ'}">${t.status}</span></td></tr>`; }); }
                 document.getElementById('msgJobsTableBody').innerHTML = html;
             });
         }
 
-        // Export To Excel Function (Client Side)
         function exportToExcel() {
             Toast.fire({ title: 'กำลังเตรียมไฟล์ดาวน์โหลด...', didOpen: () => Swal.showLoading() });
             callBackend('getAllTasks', {}, tasks => {
-                if(!tasks || tasks.length === 0) {
-                    Swal.fire('ไม่พบข้อมูล', 'ไม่มีข้อมูลงานในระบบสำหรับดาวน์โหลด', 'info');
-                    return;
-                }
-                
-                // จัดเตรียม Data สำหรับ Excel
-                const exportData = tasks.map(t => ({
-                    "รหัสงาน": t.id,
-                    "วันที่-เวลาแจ้ง": t.date,
-                    "ฝ่ายผู้ส่ง": t.senderDept,
-                    "ชื่อผู้ส่ง": t.senderName,
-                    "เบอร์โทรผู้ส่ง": t.senderPhone,
-                    "สถานที่ปลายทาง": t.destName,
-                    "ชื่อผู้รับปลายทาง": t.destDept,
-                    "รอบจัดส่ง": t.timeSlot,
-                    "รายละเอียด": t.details,
-                    "สถานะงาน": t.status,
-                    "พนักงานจัดส่ง (Messenger)": t.messenger
-                }));
-
-                const worksheet = XLSX.utils.json_to_sheet(exportData);
-                const workbook = XLSX.utils.book_new();
+                if(!tasks || tasks.length === 0) { Swal.fire('ไม่พบข้อมูล', 'ไม่มีข้อมูลงาน', 'info'); return; }
+                const exportData = tasks.map(t => ({ "รหัสงาน": t.id, "วันที่-เวลาแจ้ง": t.date, "ฝ่ายผู้ส่ง": t.senderDept, "ชื่อผู้ส่ง": t.senderName, "เบอร์โทรผู้ส่ง": t.senderPhone, "สถานที่ปลายทาง": t.destName, "ฝ่าย/ชื่อผู้รับปลายทาง": t.destDept, "เบอร์โทรผู้รับ": t.destPhone, "รอบจัดส่ง": t.timeSlot, "รายละเอียด": t.details, "สถานะงาน": t.status, "พนักงานจัดส่ง (Messenger)": t.messenger }));
+                const worksheet = XLSX.utils.json_to_sheet(exportData); const workbook = XLSX.utils.book_new();
                 XLSX.utils.book_append_sheet(workbook, worksheet, "Delivery_History");
-                
-                // สร้างชื่อไฟล์
-                const d = new Date();
-                const fileName = `SmartDispatch_Export_${d.getFullYear()}${(d.getMonth()+1).toString().padStart(2,'0')}${d.getDate().toString().padStart(2,'0')}.xlsx`;
-                
-                XLSX.writeFile(workbook, fileName);
+                const d = new Date(); XLSX.writeFile(workbook, `SmartDispatch_Export_${d.getFullYear()}${(d.getMonth()+1).toString().padStart(2,'0')}${d.getDate().toString().padStart(2,'0')}.xlsx`);
                 Swal.close();
             });
         }
