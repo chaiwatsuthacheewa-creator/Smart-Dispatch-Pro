@@ -25,11 +25,11 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Prompt', sans-serif; }
         body { background: var(--bg-color); color: var(--text-main); display: flex; justify-content: center; padding: 20px 10px; min-height: 100vh; transition: background 0.3s; }
         
-        .card-wrapper { position: relative; max-width: 1200px; width: 100%; border-radius: 22px; padding: 4px; overflow: hidden; background: var(--card-bg); box-shadow: var(--shadow); margin: auto; align-self: flex-start; }
-        .card-wrapper::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: conic-gradient(transparent, transparent, transparent, var(--primary-color)); animation: rotateLightning 3s linear infinite; }
-        @keyframes rotateLightning { 100% { transform: rotate(360deg); } }
-
-        .app-container { position: relative; z-index: 1; background: var(--card-bg); width: 100%; border-radius: 18px; padding: 24px; min-height: 80vh; }
+        .card-wrapper { 
+            position: relative; max-width: 1200px; width: 100%; border-radius: 18px; 
+            background: var(--card-bg); box-shadow: var(--shadow); margin: auto; align-self: flex-start; 
+        }
+        .app-container { padding: 24px; min-height: 80vh; }
         
         .header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid var(--border-color); padding-bottom: 16px; margin-bottom: 20px; flex-wrap: wrap; gap:10px;}
         .header-title { font-size: 1.4rem; font-weight: 600; display: flex; align-items: center; gap: 8px; color: var(--primary-color); }
@@ -45,18 +45,18 @@
         .status-dot { height: 8px; width: 8px; border-radius: 50%; display: inline-block; }
         .status-dot.online { background-color: var(--success-color); box-shadow: 0 0 6px var(--success-color); animation: pulse 2s infinite; }
         .status-dot.offline { background-color: var(--danger-color); box-shadow: 0 0 6px var(--danger-color); }
-        @keyframes pulse { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); } 70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
 
         .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; background: var(--input-bg); border-radius: 12px; padding: 6px; border: 1px solid var(--border-color); }
         .tab-btn { flex: 1; padding: 10px; border: none; background: transparent; cursor: pointer; color: var(--text-muted); font-weight: 500; border-radius: 8px; font-size: 0.9rem; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap;}
-        .tab-btn svg { width: 18px; height: 18px; fill: currentColor; }
         .tab-btn.active { background: var(--card-bg); color: var(--primary-color); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
         .view-section { display: none; animation: fadeIn 0.3s ease; }
         .view-section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .form-row { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap;}
-        .form-group { flex: 1; min-width: 200px; }
+        .form-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+        .form-group { flex: 1 1 100%; }
+        @media (min-width: 768px) { .form-group { flex: 1 1 45%; } }
+
         .form-group label { display: block; margin-bottom: 6px; font-weight: 500; font-size: 0.9rem; color: var(--text-main); }
         .form-control { width: 100%; padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--input-bg); color: var(--text-main); font-size: 0.95rem; transition: 0.2s; }
         .form-control:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px var(--primary-light); }
@@ -69,11 +69,10 @@
         .hero-box p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6;}
         
         .table-responsive { width: 100%; overflow-x: auto; background: var(--card-bg); border-radius: 8px; border: 1px solid var(--border-color); }
-        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; white-space: nowrap; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; white-space: nowrap; min-width: 650px; }
         th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
         th { background: var(--input-bg); font-weight: 600; color: var(--text-muted); }
-        tbody tr { transition: 0.2s; cursor: pointer;}
-        tbody tr:hover { background-color: var(--input-bg); }
+        tbody tr:hover { background-color: var(--input-bg); cursor: pointer; }
         .badge { padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
         .badge.รอรับงาน { background: #fef3c7; color: #d97706; }
         .badge.กำลังดำเนินการ { background: #dbeafe; color: #2563eb; }
@@ -82,11 +81,8 @@
 
         .job-card { background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.2s;}
         .job-card:hover { border-color: var(--primary-color); box-shadow: 0 2px 5px rgba(0,0,0,0.05);}
-        .job-card h4 { color: var(--text-main); margin-bottom: 4px;}
-        .job-card p { font-size: 0.8rem; color: var(--text-muted);}
-
         .cal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; margin-top: 15px;}
-        .cal-box { background: var(--input-bg); padding: 15px; border-radius: 10px; border: 1px solid var(--border-color); cursor: pointer; transition: 0.2s;}
+        .cal-box { background: var(--input-bg); padding: 15px; border-radius: 10px; border: 1px solid var(--border-color); cursor: pointer;}
         .cal-box:hover { border-color: var(--primary-color); transform: translateY(-2px); box-shadow: var(--shadow);}
         .cal-box h4 { border-bottom: 1px solid var(--border-color); padding-bottom: 8px; margin-bottom: 8px; color: var(--primary-color);}
         
@@ -98,6 +94,12 @@
         .detail-card { background: var(--input-bg); padding: 12px 15px; border-radius: 8px; margin-bottom: 12px; border: 1px solid var(--border-color); }
         .detail-label { font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 2px;}
         .detail-val { font-weight: 500; }
+
+        /* 🟢 สไตล์สำหรับ Checkbox หน้าต่าง Messenger */
+        .check-task-box { background: var(--card-bg); border: 1px solid var(--border-color); padding: 12px; border-radius: 8px; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; cursor: pointer; transition: 0.2s; }
+        .check-task-box:hover { border-color: var(--primary-color); }
+        .check-task-box input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-color: var(--success-color); }
+        .check-task-content { flex: 1; }
     </style>
 </head>
 <body>
@@ -144,7 +146,7 @@
 
             <div class="tabs" id="messengerTabs" style="display:none;">
                 <button class="tab-btn active" id="tabBoardBtn" onclick="switchView('tabBoard')">📋 กระดานรับงาน</button>
-                <button class="tab-btn" id="tabUpdBtn" onclick="switchView('tabUpd')">🛵 งานของฉัน</button>
+                <button class="tab-btn" id="tabUpdBtn" onclick="switchView('tabUpd')">🛵 งานของฉัน (ปิดจ๊อบ)</button>
             </div>
 
             <div class="tabs" id="adminTabs" style="display:none;">
@@ -174,7 +176,7 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label>ฝ่ายผู้ส่ง</label>
-                        <select id="senderDept" class="form-control" onchange="toggleDeptOther('senderDept', 'senderDeptOther')" required>
+                        <select id="senderDept" class="form-control" onchange="toggleDeptOther()" required>
                             <option value="" disabled selected>กำลังโหลดรายชื่อฝ่าย...</option>
                         </select>
                         <input type="text" id="senderDeptOther" class="form-control" placeholder="โปรดระบุชื่อฝ่ายของคุณ" style="display:none; margin-top:8px;">
@@ -185,14 +187,11 @@
                 
                 <h3 style="margin-bottom:15px; color:var(--primary-color); margin-top:10px;">ข้อมูลปลายทาง</h3>
                 <div class="form-row">
-                    <div class="form-group"><label>สถานที่ปลายทาง / บริษัท</label><input type="text" id="destName" class="form-control" placeholder="ชื่ออาคาร หรือ บริษัทปลายทาง" required></div>
-                    <div class="form-group">
-                        <label>ฝ่ายผู้รับ</label>
-                        <select id="destDept" class="form-control" onchange="toggleDeptOther('destDept', 'destDeptOther')" required>
-                            <option value="" disabled selected>กำลังโหลดรายชื่อฝ่าย...</option>
-                        </select>
-                        <input type="text" id="destDeptOther" class="form-control" placeholder="โปรดระบุชื่อฝ่ายหรือผู้รับ" style="display:none; margin-top:8px;">
-                    </div>
+                    <div class="form-group"><label>สถานที่ปลายทาง</label><input type="text" id="destName" class="form-control" placeholder="ชื่ออาคาร, บริษัท, หรือ จุดส่ง" required></div>
+                    <div class="form-group"><label>ที่อยู่</label><input type="text" id="destAddress" class="form-control" placeholder="รายละเอียดที่อยู่ ชั้น ซอย" required></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>ชื่อ-สกุล ผู้รับปลายทาง</label><input type="text" id="destReceiver" class="form-control" placeholder="ระบุชื่อ-นามสกุล ผู้รับมอบปลายทาง" required></div>
                     <div class="form-group"><label>เบอร์ติดต่อผู้รับ</label><input type="text" id="destPhone" class="form-control" placeholder="08X-XXX-XXXX (ถ้ามี)"></div>
                 </div>
 
@@ -210,10 +209,10 @@
                     </div>
                 </div>
 
-                <div class="form-group" style="margin-bottom: 20px;">
+                <div class="form-group" style="margin-bottom: 20px; width: 100%;">
                     <label>แนบรูปเอกสาร/พัสดุ (เพื่อใช้อ้างอิง)</label>
                     <div style="position: relative; overflow: hidden; width: 100%;">
-                        <button type="button" class="form-control" style="font-weight: 500; text-align:left; background:var(--card-bg);">📸 ถ่ายรูปหน้าซอง / เลือกรูปภาพ <span id="reqFileNameDisplay" style="color: var(--success-color); float:right;"></span></button>
+                        <button type="button" class="form-control" style="font-weight: 500; text-align:left;">📸 ถ่ายรูปหน้าซอง / เลือกรูปภาพ <span id="reqFileNameDisplay" style="color: var(--success-color); float:right;"></span></button>
                         <input type="file" id="reqPhoto" accept="image/*" capture="environment" style="position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; height: 100%; width: 100%;">
                     </div>
                 </div>
@@ -246,26 +245,29 @@
             </div>
 
             <form id="tabUpd" class="view-section">
-                <div class="form-group">
-                    <label>งานที่กำลังดำเนินการ (เลือกเพื่อจบงาน)</label>
-                    <select id="myTaskDropdown" class="form-control" required><option value="" disabled selected>กำลังโหลดงานของคุณ...</option></select>
+                <h3 style="margin-bottom:10px; color:var(--primary-color);">ปิดจ๊อบส่งเอกสาร</h3>
+                <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:15px;">ติ๊กเลือกงานที่คุณส่งสำเร็จ (เลือกได้หลายงานพร้อมกัน)</p>
+                
+                <div id="myTasksContainer" style="background:var(--input-bg); border:1px solid var(--border-color); border-radius:8px; padding:15px; max-height:300px; overflow-y:auto; margin-bottom:15px;">
+                    <div style="text-align:center;">กำลังโหลดงานของคุณ...</div>
                 </div>
+
                 <div class="form-group">
-                    <label>แนบรูปหลักฐานการส่ง</label>
+                    <label>แนบรูปหลักฐานการส่ง (รูปเดียวใช้ปิดงานที่เลือกทั้งหมด)</label>
                     <div style="position: relative; overflow: hidden; width: 100%;">
-                        <button type="button" class="form-control" style="font-weight: 500; text-align:left; background:var(--card-bg);">📸 ถ่ายรูป / เลือกรูปภาพ <span id="fileNameDisplay" style="color: var(--success-color); float:right;"></span></button>
+                        <button type="button" class="form-control" style="font-weight: 500; text-align:left; background:var(--card-bg);">📸 ถ่ายรูปจุดวางของ / ใบเซ็นรับ <span id="fileNameDisplay" style="color: var(--success-color); float:right;"></span></button>
                         <input type="file" id="podPhoto" accept="image/*" capture="environment" style="position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; height: 100%; width: 100%;">
                     </div>
                 </div>
                 <input type="hidden" id="messengerName" class="form-control">
-                <button type="submit" class="btn-primary" style="background: var(--success-color);">✔️ ยืนยันการปิดงานส่งเอกสาร (ต้องใส่รหัสผ่าน)</button>
+                <button type="submit" class="btn-primary" style="background: var(--success-color); margin-top:15px;">✔️ ยืนยันการปิดงานที่เลือก (ต้องใส่รหัสผ่าน)</button>
             </form>
 
             <div id="tabMng" class="view-section">
                 <div style="display:flex; gap:10px; margin-bottom: 15px; flex-wrap:wrap;">
                     <button onclick="loadAdminTable()" class="form-control" style="font-weight: 600; cursor: pointer; flex:1; min-width:120px;">🔄 รีเฟรช</button>
                     <button onclick="exportToExcel()" class="form-control" style="background:#10b981; color:white; border:none; font-weight: 600; cursor: pointer; flex:1; min-width:150px;">💾 Export Excel</button>
-                    <button onclick="forceLineUpdate()" class="form-control" style="background:var(--primary-color); color:white; border:none; font-weight: 600; cursor: pointer; flex:1; min-width:150px;">📲 แจ้งเตือนเข้า LINE</button>
+                    <button onclick="forceLineUpdate()" class="form-control" style="background:var(--primary-color); color:white; border:none; font-weight: 600; cursor: pointer; flex:1; min-width:150px;">📲 ส่งเตือนตามรอบเดี๋ยวนี้</button>
                 </div>
                 <div class="table-responsive">
                     <table>
@@ -321,6 +323,7 @@
     </div>
 
     <script>
+        // ⚠️ ต้องวางลิงก์ Web App ของคุณที่บรรทัดนี้เพื่อเชื่อมต่อ API เหมือนเดิม
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxt32xvUsFvC3lirXQQnhcbMPLialLzSbGIiGggbkwmrtW3bQVg8b2mYQCevL_xQzzGVw/exec";
         
         const Toast = Swal.mixin({ allowOutsideClick: false, allowEscapeKey: false });
@@ -342,22 +345,19 @@
             .catch(err => { if (failureCallback) failureCallback(err); });
         }
 
-        // 🟢 โหลด Dropdown ฝ่ายทั้งต้นทางและปลายทาง
         function loadDepartments() {
             callBackend('getDepartments', {}, list => {
                 let selSender = document.getElementById('senderDept');
-                let selDest = document.getElementById('destDept');
                 let baseHTML = '<option value="" disabled selected>-- โปรดเลือกฝ่าย --</option>';
                 if(list && list.length > 0) { list.forEach(dept => baseHTML += `<option value="${dept}">${dept}</option>`); }
                 baseHTML += `<option value="other">อื่นๆ (โปรดระบุ)</option>`;
                 selSender.innerHTML = baseHTML;
-                selDest.innerHTML = baseHTML;
             });
         }
         
-        function toggleDeptOther(selectId, otherId) {
-            const select = document.getElementById(selectId);
-            const otherInput = document.getElementById(otherId);
+        function toggleDeptOther() {
+            const select = document.getElementById('senderDept');
+            const otherInput = document.getElementById('senderDeptOther');
             if (select.value === 'other') {
                 otherInput.style.display = 'block';
                 otherInput.required = true;
@@ -400,8 +400,8 @@
                 html: `
                     <div class="detail-box">
                         <div class="detail-card"><span class="detail-label">📅 วันที่และเวลา</span><span class="detail-val">${t.date}</span></div>
-                        <div class="detail-card"><span class="detail-label">📤 ข้อมูลผู้จัดส่ง (ต้นทาง)</span><span class="detail-val">${t.senderDept} - ${t.senderName}</span><br><span class="detail-val">📞 ${t.senderPhone}</span></div>
-                        <div class="detail-card"><span class="detail-label">📥 ข้อมูลผู้รับ (ปลายทาง)</span><span class="detail-val">🏢 ${t.destName}</span><br><span class="detail-val">👤 ${t.destDept}</span><br><span class="detail-val">📞 ${t.destPhone || '-'}</span></div>
+                        <div class="detail-card"><span class="detail-label">📤 ข้อมูลผู้จัดส่ง (ต้นทาง)</span><span class="detail-val"><b>${t.senderName}</b></span><br><span class="detail-val">${t.senderDept}</span><br><span class="detail-val">📞 ${t.senderPhone}</span></div>
+                        <div class="detail-card"><span class="detail-label">📥 ข้อมูลผู้รับ (ปลายทาง)</span><span class="detail-val">🏢 ${t.destName}</span><br><span class="detail-val">📌 ที่อยู่: ${t.destAddress}</span><br><span class="detail-val">👤 ผู้รับ: ${t.destReceiver}</span><br><span class="detail-val">📞 เบอร์โทร: ${t.destPhone || '-'}</span></div>
                         <div class="detail-card" style="display:flex; justify-content:space-between;">
                             <div><span class="detail-label">⏰ รอบส่ง</span><span class="detail-val" style="color:var(--primary-color);">${t.timeSlot}</span></div>
                             <div><span class="detail-label">📌 สถานะ</span><span class="detail-val">${t.status}</span></div>
@@ -475,21 +475,17 @@
         });
 
         function submitNewTask(fileBase64) {
-            // ดึงค่า Dept ฝั่งส่ง
             let finalSenderDept = document.getElementById('senderDept').value;
             if (finalSenderDept === 'other') finalSenderDept = document.getElementById('senderDeptOther').value;
-            
-            // ดึงค่า Dept ฝั่งรับ
-            let finalDestDept = document.getElementById('destDept').value;
-            if (finalDestDept === 'other') finalDestDept = document.getElementById('destDeptOther').value;
 
             const data = {
                 senderDept: finalSenderDept, 
                 senderName: document.getElementById('senderName').value, 
                 senderPhone: document.getElementById('senderPhone').value,
                 destName: document.getElementById('destName').value, 
-                destDept: finalDestDept, 
-                destPhone: document.getElementById('destPhone').value, // เพิ่มเบอร์รับ
+                destAddress: document.getElementById('destAddress').value,
+                destReceiver: document.getElementById('destReceiver').value, 
+                destPhone: document.getElementById('destPhone').value, 
                 timeSlot: document.getElementById('timeSlot').value, 
                 details: document.getElementById('details').value, 
                 fileBase64: fileBase64
@@ -505,8 +501,7 @@
                     });
                     document.getElementById('tabReq').reset(); 
                     document.getElementById('reqFileNameDisplay').innerText = '';
-                    toggleDeptOther('senderDept', 'senderDeptOther'); 
-                    toggleDeptOther('destDept', 'destDeptOther');
+                    toggleDeptOther(); 
                 } else { Toast.fire({ icon: 'error', title: 'ผิดพลาด', text: res ? res.message : 'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์' }); }
             });
         }
@@ -519,7 +514,14 @@
                 tasks.forEach(t => {
                     cacheTasks[t.id] = t;
                     let b = t.status === 'สำเร็จ' ? 'สำเร็จ' : (t.status === 'กำลังดำเนินการ' ? 'กำลังดำเนินการ' : 'รอรับงาน');
-                    html += `<tr onclick="showTaskDetails('${t.id}')"><td><b>${t.id}</b></td><td><small>${t.date}</small></td><td>${t.senderDept}</td><td>${t.destName}</td><td>${t.messenger}</td><td><span class="badge ${b}">${t.status}</span></td></tr>`;
+                    html += `<tr onclick="showTaskDetails('${t.id}')">
+                        <td><b>${t.id}</b></td>
+                        <td><small>${t.date}</small></td>
+                        <td><b>${t.senderName}</b><br><small style="color:var(--text-muted)">${t.senderDept}</small></td>
+                        <td>${t.destName}</td>
+                        <td>${t.messenger}</td>
+                        <td><span class="badge ${b}">${t.status}</span></td>
+                    </tr>`;
                 });
                 document.getElementById('trackTableBody').innerHTML = html;
             });
@@ -537,7 +539,7 @@
                 tasks.forEach(t => {
                     cacheTasks[t.id] = t;
                     if(t.timeSlot.includes('เช้า')) m++; else a++;
-                    html += `<div class="job-card" onclick="showTaskDetails('${t.id}')"><div><h4>${t.id}</h4><p>📍 ปลายทาง: ${t.destName} <br> 👤 จาก: ${t.senderDept} (${t.senderName})</p></div><span class="badge รอรับงาน">${t.timeSlot}</span></div>`;
+                    html += `<div class="job-card" onclick="showTaskDetails('${t.id}')"><div><h4>${t.id}</h4><p>📍 ปลายทาง: ${t.destName} <br> 👤 จาก: <b>${t.senderName}</b> (${t.senderDept})</p></div><span class="badge รอรับงาน">${t.timeSlot}</span></div>`;
                 });
                 document.getElementById('boardSummary').innerText = `รอบเช้าค้าง: ${m} งาน | รอบบ่ายค้าง: ${a} งาน`;
                 document.getElementById('availableTasksList').innerHTML = html;
@@ -563,43 +565,73 @@
             });
         }
 
+        // 🟢 เปลี่ยนจาก Dropdown เป็น Checkbox list (เลือกได้หลายงาน)
         function loadMyTasks() {
-            document.getElementById('myTaskDropdown').innerHTML = '<option value="" disabled selected>กำลังโหลด...</option>';
+            const container = document.getElementById('myTasksContainer');
+            container.innerHTML = '<div style="text-align:center;">กำลังโหลด...</div>';
             let mName = document.getElementById('messengerName').value;
             callBackend('getMyTasks', {messengerName: mName}, tasks => {
-                const select = document.getElementById('myTaskDropdown');
-                if(!tasks || tasks.length === 0) { select.innerHTML = '<option value="" disabled selected>✅ คุณส่งงานครบหมดแล้ว</option>'; return; }
-                select.innerHTML = '<option value="" disabled selected>-- เลือกงานที่ส่งถึงปลายทางแล้ว --</option>';
-                tasks.forEach(t => select.innerHTML += `<option value="${t.id}">${t.id} : ${t.destName}</option>`);
+                if(!tasks || tasks.length === 0) { 
+                    container.innerHTML = '<div style="text-align:center; color:var(--success-color); font-weight:bold;">✅ คุณวิ่งส่งงานครบหมดแล้วครับ</div>'; 
+                    return; 
+                }
+                
+                let html = `<div style="margin-bottom:10px; padding-bottom:10px; border-bottom:1px solid var(--border-color);">
+                                <input type="checkbox" id="selectAllCb" style="width:18px; height:18px; cursor:pointer; accent-color:var(--success-color);" onclick="toggleAllTasks(this)">
+                                <label for="selectAllCb" style="font-weight:bold; cursor:pointer; margin-left:8px;">✅ เลือกงานทั้งหมด</label>
+                            </div>`;
+                
+                tasks.forEach(t => {
+                    html += `<label class="check-task-box">
+                                <input type="checkbox" class="task-cb" value="${t.id}">
+                                <div class="check-task-content">
+                                    <div style="font-weight:600; color:var(--primary-color);">${t.id}</div>
+                                    <div style="font-size:0.85rem;">🏢 ส่งที่: ${t.destName}</div>
+                                </div>
+                             </label>`;
+                });
+                container.innerHTML = html;
             });
+        }
+
+        function toggleAllTasks(source) {
+            const checkboxes = document.querySelectorAll('.task-cb');
+            checkboxes.forEach(cb => cb.checked = source.checked);
         }
 
         document.getElementById('podPhoto').addEventListener('change', e => { if(e.target.files.length > 0) document.getElementById('fileNameDisplay').innerText = "✅ แนบรูปแล้ว"; });
 
+        // 🟢 อัปเดตตอนกด Submit ปิดงาน ให้กวาดเอา Checkbox ที่ถูกติ๊กส่งไปให้หมด
         document.getElementById('tabUpd').addEventListener('submit', function(e) {
             e.preventDefault();
-            let tid = document.getElementById('myTaskDropdown').value;
-            if(!tid) return;
+            
+            const checkedBoxes = document.querySelectorAll('.task-cb:checked');
+            if(checkedBoxes.length === 0) {
+                Toast.fire({icon: 'warning', title: 'ยังไม่ได้เลือกงาน', text: 'กรุณาติ๊ก ✔️ เลือกงานที่ต้องการปิดจ๊อบก่อนครับ'});
+                return;
+            }
+            
+            let selectedIds = Array.from(checkedBoxes).map(cb => cb.value);
 
             Toast.fire({
-                title: 'ยืนยันรหัสผ่านอีกครั้ง', text: `ยืนยันการปิดงาน ${tid}`, input: 'password', inputPlaceholder: 'กรอกรหัสผ่านของคุณ',
-                showCancelButton: true, confirmButtonText: 'ปิดงาน', confirmButtonColor: 'var(--success-color)',
+                title: 'ยืนยันรหัสผ่านอีกครั้ง', text: `ยืนยันการปิดจ๊อบ ${selectedIds.length} งานที่เลือก`, input: 'password', inputPlaceholder: 'กรอกรหัสผ่านของคุณ',
+                showCancelButton: true, confirmButtonText: `ปิดจ๊อบ (${selectedIds.length}) งาน`, confirmButtonColor: 'var(--success-color)',
                 preConfirm: (pass) => { if(!pass) Swal.showValidationMessage('กรุณากรอกรหัสผ่าน'); return pass; }
             }).then((res) => {
                 if(res.isConfirmed) {
                     Toast.fire({ title: 'กำลังอัปโหลด...', didOpen: () => Swal.showLoading() });
                     const fileInput = document.getElementById('podPhoto');
                     if (fileInput.files.length > 0) {
-                        const reader = new FileReader(); reader.onload = ev => submitUpdateMsg(ev.target.result, res.value); reader.readAsDataURL(fileInput.files[0]);
-                    } else { submitUpdateMsg(null, res.value); }
+                        const reader = new FileReader(); reader.onload = ev => submitUpdateMsg(ev.target.result, res.value, selectedIds); reader.readAsDataURL(fileInput.files[0]);
+                    } else { submitUpdateMsg(null, res.value, selectedIds); }
                 }
             });
         });
         
-        function submitUpdateMsg(file, pass) {
-            const data = { ticketId: document.getElementById('myTaskDropdown').value, messengerName: document.getElementById('messengerName').value, password: pass, fileBase64: file };
+        function submitUpdateMsg(file, pass, selectedIds) {
+            const data = { ticketIds: selectedIds, messengerName: document.getElementById('messengerName').value, password: pass, fileBase64: file };
             callBackend('completeTask', data, res => {
-                if(res.success) { Swal.fire({ icon: 'success', title: 'ส่งงานสำเร็จ!', timer: 2000, showConfirmButton: false }); document.getElementById('tabUpd').reset(); document.getElementById('fileNameDisplay').innerText=''; loadMyTasks(); } 
+                if(res.success) { Swal.fire({ icon: 'success', title: 'ปิดจ๊อบสำเร็จ!', timer: 2000, showConfirmButton: false }); document.getElementById('tabUpd').reset(); document.getElementById('fileNameDisplay').innerText=''; loadMyTasks(); } 
                 else { Toast.fire({ icon: 'error', title: 'ผิดพลาด', text: res.message }); }
             });
         }
@@ -623,7 +655,7 @@
 
         function forceLineUpdate() {
             Toast.fire({ title: 'กำลังยิงบรอดแคสต์...', didOpen: () => Swal.showLoading() });
-            callBackend('broadcastSummaryManually', {}, res => { Swal.fire({title:'สำเร็จ', text:'ส่งสรุปเข้า LINE แล้ว', icon:'success', timer: 2000, showConfirmButton:false}); });
+            callBackend('broadcastSummaryManually', {}, res => { Swal.fire({title:'สำเร็จ', text:'ส่งข้อความสรุปเข้า LINE แล้ว', icon:'success', timer: 2000, showConfirmButton:false}); });
         }
 
         function changeStatus(id, stat, event) {
@@ -636,11 +668,7 @@
             const data = JSON.parse(decodeURIComponent(msgJsonStr));
             let html = '<div style="text-align:left; font-size:0.95rem;">';
             if(Object.keys(data).length === 0) { html += '<p style="text-align:center; color:var(--text-muted);">ยังไม่มีการวิ่งงานสำเร็จในวันนี้</p>'; }
-            for(let m in data) { 
-                html += `<div style="background:var(--input-bg); padding:12px; border-radius:8px; margin-bottom:8px; border:1px solid var(--border-color); display:flex; justify-content:space-between;">
-                            <span>🛵 <b>${m}</b></span> <span style="color:var(--success-color); font-weight:bold;">${data[m]} งาน</span>
-                         </div>`; 
-            }
+            for(let m in data) { html += `<div style="background:var(--input-bg); padding:12px; border-radius:8px; margin-bottom:8px; border:1px solid var(--border-color); display:flex; justify-content:space-between;"><span>🛵 <b>${m}</b></span> <span style="color:var(--success-color); font-weight:bold;">${data[m]} งาน</span></div>`; }
             html += '</div>';
             Swal.fire({ title: `ยอดวิ่งงานวันที่ ${dateStr}`, html: html, showCloseButton: true, showConfirmButton: false, allowOutsideClick: false });
         }
@@ -656,11 +684,7 @@
                         let c = stats.calendar[d];
                         let msgObj = encodeURIComponent(JSON.stringify(c.messengers));
                         let msgText = Object.keys(c.messengers).map(k => `${k}(${c.messengers[k]})`).join(', ') || 'ยังไม่มีคนวิ่งจบงาน';
-                        calHtml += `<div class="cal-box" onclick="showMessengerStats('${d}', '${msgObj}')" title="คลิกดูรายชื่อ">
-                            <h4>📆 ${d}</h4>
-                            <p style="font-size:0.9rem;">📦 งานทั้งหมด: <b>${c.total}</b> | ⏳ ค้างส่ง: <b style="color:var(--danger-color)">${c.pending}</b></p>
-                            <p style="font-size:0.8rem; color:var(--text-muted); margin-top:5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">🛵 ${msgText}</p>
-                        </div>`;
+                        calHtml += `<div class="cal-box" onclick="showMessengerStats('${d}', '${msgObj}')" title="คลิกดูรายชื่อ"><h4>📆 ${d}</h4><p style="font-size:0.9rem;">📦 งานทั้งหมด: <b>${c.total}</b> | ⏳ ค้างส่ง: <b style="color:var(--danger-color)">${c.pending}</b></p><p style="font-size:0.8rem; color:var(--text-muted); margin-top:5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">🛵 ${msgText}</p></div>`;
                     });
                 }
                 document.getElementById('calendarView').innerHTML = calHtml;
@@ -671,10 +695,7 @@
                 let labels = Object.keys(deptStats), values = Object.values(deptStats);
                 if(labels.length === 0) { labels = ['ไม่มีข้อมูล']; values = [0]; }
                 if(deptChartInst) deptChartInst.destroy();
-                deptChartInst = new Chart(document.getElementById('deptChart').getContext('2d'), {
-                    type: 'bar', data: { labels: labels, datasets: [{ label: 'จำนวนงานจัดส่ง', data: values, backgroundColor: 'rgba(37, 99, 235, 0.7)', borderColor: '#2563eb', borderWidth: 1, borderRadius: 4 }] },
-                    options: { responsive: true, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }, plugins: { legend: { display: false } } }
-                });
+                deptChartInst = new Chart(document.getElementById('deptChart').getContext('2d'), { type: 'bar', data: { labels: labels, datasets: [{ label: 'จำนวนงานจัดส่ง', data: values, backgroundColor: 'rgba(37, 99, 235, 0.7)', borderColor: '#2563eb', borderWidth: 1, borderRadius: 4 }] }, options: { responsive: true, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }, plugins: { legend: { display: false } } } });
             });
         }
 
@@ -702,7 +723,7 @@
             Toast.fire({ title: 'กำลังเตรียมไฟล์ดาวน์โหลด...', didOpen: () => Swal.showLoading() });
             callBackend('getAllTasks', {}, tasks => {
                 if(!tasks || tasks.length === 0) { Swal.fire('ไม่พบข้อมูล', 'ไม่มีข้อมูลงาน', 'info'); return; }
-                const exportData = tasks.map(t => ({ "รหัสงาน": t.id, "วันที่-เวลาแจ้ง": t.date, "ฝ่ายผู้ส่ง": t.senderDept, "ชื่อผู้ส่ง": t.senderName, "เบอร์โทรผู้ส่ง": t.senderPhone, "สถานที่ปลายทาง": t.destName, "ฝ่าย/ชื่อผู้รับปลายทาง": t.destDept, "เบอร์โทรผู้รับ": t.destPhone, "รอบจัดส่ง": t.timeSlot, "รายละเอียด": t.details, "สถานะงาน": t.status, "พนักงานจัดส่ง (Messenger)": t.messenger }));
+                const exportData = tasks.map(t => ({ "รหัสงาน": t.id, "วันที่-เวลาแจ้ง": t.date, "ฝ่ายผู้ส่ง": t.senderDept, "ชื่อผู้ส่ง": t.senderName, "เบอร์โทรผู้ส่ง": t.senderPhone, "สถานที่ปลายทาง": t.destName, "ที่อยู่ปลายทาง": t.destAddress, "ชื่อ-สกุลผู้รับ": t.destReceiver, "เบอร์โทรผู้รับ": t.destPhone, "รอบจัดส่ง": t.timeSlot, "รายละเอียด": t.details, "สถานะงาน": t.status, "พนักงานจัดส่ง (Messenger)": t.messenger }));
                 const worksheet = XLSX.utils.json_to_sheet(exportData); const workbook = XLSX.utils.book_new();
                 XLSX.utils.book_append_sheet(workbook, worksheet, "Delivery_History");
                 const d = new Date(); XLSX.writeFile(workbook, `SmartDispatch_Export_${d.getFullYear()}${(d.getMonth()+1).toString().padStart(2,'0')}${d.getDate().toString().padStart(2,'0')}.xlsx`);
